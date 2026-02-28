@@ -1,0 +1,108 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}منصة الدورات{% endblock %}</title>
+    {% bootstrap_css %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">TechHub</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'course_list' %}">الدورات</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning fw-bold" href="{% url 'my_list' %}">
+                            قائمتي <span class="badge bg-danger">{{ request.session.cart_counter|default:0 }}</span>
+                        </a>
+                    </li>
+
+                    <ul class="navbar-nav ms-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="nav-link text-info fw-bold"><i class="bi bi-person-circle"></i> مرحباً، {{user.username }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="{% url 'logout' %}">تسجيل الخروج</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">تسجيل الدخول</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">إنشاء حساب</a></li>
+                        {% endif %}
+                    </ul>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+
+        <div class="container mt-3">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-center text-md-end">
+            <div class="row text-center text-md-end">
+
+                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+                    <h5 class="text-uppercase fw-bold mb-4 text-warning">TechHub</h5>
+                    <p class="text-light opacity-75">
+                        منصتك الأولى لتعلم أحدث التقنيات البرمجية، وتطوير مهاراتك التقنية من خلال دورات احترافية تلبي
+                        احتياجات سوق العمل.
+                    </p>
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase fw-bold mb-4 text-warning">روابط سريعة</h5>
+                    <p>
+                        <a href="{% url 'course_list' %}" class="text-light text-decoration-none">الدورات المتاحة</a>
+                    </p>
+                    <p>
+                        <a class="nav-link" href="{% url 'contact' %}">تواصل معنا</a>
+                    </p>
+                    <p>
+                        <a href="{% url 'register' %}" class="text-light text-decoration-none">إنشاء حساب</a>
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase fw-bold mb-4 text-warning">تواصل معنا</h5>
+                    <p><i class="bi bi-envelope me-2"></i> info@techhub.com</p>
+                    <p><i class="bi bi-telephone me-2"></i> +966 50 000 0000</p>
+                </div>
+            </div>
+
+            <hr class="mb-4 border-light opacity-50">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-lg-12 text-center">
+                    <p class="text-light opacity-75 mb-0">
+                        &copy; 2026 جميع الحقوق محفوظة لمنصة <strong>TechHub</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% bootstrap_javascript %}
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}إنشاء حساب جديد{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-dark text-white text-center py-3">
+                <h4 class="mb-0">إنشاء حساب متدرب جديد</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button type="submit" class="btn btn-primary w-100 py-2 mt-3">تسجيل الحساب</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-muted">لديك حساب بالفعل؟ <a href="{% url 'login' %}" class="text-decoration-none fw-bold">سجل دخولك من هنا</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

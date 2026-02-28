@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}قائمة التسجيل المبدئي{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">الدورات المختارة للتسجيل</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover bg-white shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>رقم الدورة</th>
+                <th>اسم الدورة</th>
+                <th>السعر</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course_id, item in cart.items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td class="fw-bold">{{ item.title }}</td>
+                <td class="text-success">{{ item.price }} ريال</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center text-muted py-4">
+                    لم تقم بإضافة أي دورات لقائمتك حتى الآن.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot class="table-light">
+            <tr>
+                <td colspan="2" class="text-end fw-bold">الإجمالي الكلي:</td>
+                <td class="fw-bold text-danger">{{ total_price }} ريال</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="text-center mt-4 mb-5">
+    <a href="{% url 'course_list' %}" class="btn btn-outline-secondary me-2">إضافة دورة أخرى</a>
+    <a href="{% url 'checkout' %}" class="btn btn-success px-5">تأكيد التسجيل (Checkout)</a>
+</div>
+{% endblock %}
